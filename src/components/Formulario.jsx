@@ -12,6 +12,7 @@ const Formulario =()=>{
     const[modoEdicion, setModoEdicion]=React.useState(false)
     const[id, setId]=React.useState('')
     const[error, setError]=React.useState(null)
+    const[foto, setFoto]=React.useState('')
 
     React.useEffect(()=>{
      const obtenerDatos = async()=>{
@@ -30,6 +31,16 @@ const Formulario =()=>{
     }
     obtenerDatos()
 })
+const getFoto = async()=>{
+    try {
+        const res = await fetch("https://picsum.photos/100")
+        setFoto(res.url)
+        
+    } catch (error) {
+        console.log(error)
+        
+    }
+}
 
 const guardarDatos = async (e)=>{
     e.preventDefault()
@@ -57,18 +68,19 @@ const guardarDatos = async (e)=>{
     }
     try {
         const db = firebase.firestore()
-        const nuevoPokemon={
+        const nuevoNombre={
             nombreNombre:nombre,
             nombreApellido:apellido,
             nombreMusica:musica,
             nombreEquipoFutbol:equipofutbol,
             nombrePais:pais
+            nombreFoto:foto
             
         }
         await db.collection('persona').add(nuevoNombre)
         setLista([...lista,
             {id:nanoid(), nombreNombre:nombre, nombreApellido: apellido, nombreMusica:musica,
-                nombreEquipoFutbol:equipoFutbol, nombrePais:pais}
+                nombreEquipoFutbol:equipoFutbol, nombrePais:pais, nombreFoto:foto}
         ])
     } catch (error) {
         console.log(error)
@@ -168,7 +180,7 @@ const guardarDatos = async (e)=>{
                         lista.map((item)=>(
                             <li className="list-group-item" key={item.id}>
                             <span className="lead">{item.nombreNombre}-{item.nombreApellido}-{item.nombreMusica}-{item.nombreEquipoFutbol}-
-                            {item.nombrePais}</span>
+                            {item.nombrePais}-<img src={item.nombreFoto}/></span>
                             <button className="btn btn-danger btn-sm float-end mx-2"onClick={()=>eliminar(item.id)}>Eliminar</button>
                                 <button className="btn btn-warning btn-sm float-end"onClick={()=>auxEditar(item)}>Editar</button>
                             </li>
