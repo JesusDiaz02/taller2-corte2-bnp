@@ -28,3 +28,67 @@ const Formulario =()=>{
             console.log(error)
         }
     }
+    obtenerDatos()
+})
+
+const guardarDatos = async (e)=>{
+    e.preventDefault()
+    if(!nombre.trim()){
+        setError('campo nombre vacio')
+        return
+        
+    }
+    if(!apellido.trim()){
+        setError('campo apellido vacio')
+         return
+    }
+    if(!musica.trim()){
+        setError('campo musica vacio')
+        return
+        
+    }
+    if(!equipofutbol.trim()){
+        setError('campo equipo futbol vacio')
+         return
+    }
+    if(!pais.trim()){
+        setError('campo pais vacio')
+        return
+    }
+    try {
+        const db = firebase.firestore()
+        const nuevoPokemon={
+            nombreNombre:nombre,
+            nombreApellido:apellido,
+            nombreMusica:musica,
+            nombreEquipoFutbol:equipofutbol,
+            nombrePais:pais
+            
+        }
+        await db.collection('persona').add(nuevoNombre)
+        setLista([...lista,
+            {id:nanoid(), nombreNombre:nombre, nombreApellido: apellido, nombreMusica:musica,
+                nombreEquipoFutbol:equipoFutbol, nombrePais:pais}
+        ])
+    } catch (error) {
+        console.log(error)
+    }
+    setModoEdicion(false)
+    setNombre('')
+    setApellido('')
+    setMusica('')
+    setEquipoFutbol('')
+    setPais('')
+    setError(null)
+}
+    const eliminar =async(id)=>{
+            try {
+                const db = firebase.firestore()
+                await db.collection('persona').doc(id).delete()
+                const aux = lista.filter(item=>item.id !==id)
+                setLista(aux)
+            } catch (error) {
+                console.log(error)
+            }
+        
+    }
