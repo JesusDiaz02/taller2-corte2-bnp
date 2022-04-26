@@ -92,3 +92,58 @@ const guardarDatos = async (e)=>{
             }
         
     }
+     const auxEditar =(item)=>{
+        setNombre(item.nombreNombre)
+        setApellido(item.nombreApellido)
+        setMusica(item.nombreMusica)
+        setEquipoFutbol(item.nombreEquipoFutbol)
+        setPais(item.nombrePais)
+        setModoEdicion(true)
+        setId(item.id)
+    }
+    const editar=async e=>{
+        e.preventDefault()
+        if(!nombre.trim()){
+            setError('campo nombre vacio')
+            return
+            
+        }
+        if(!apellido.trim()){
+            setError('campo apellido vacio')
+             return
+        }
+        if(!musica.trim()){
+            setError('campo musica vacio')
+            return
+            
+        }
+        if(!equipoFutbol.trim()){
+            setError('campo equipo futbol vacio')
+             return
+        }
+        if(!pais.trim()){
+            setError('campo pais vacio')
+            return
+        }
+        try {
+            const db = firebase.firestore()
+            await db.collection('persona').doc(id).update({
+                nombreNombre:nombre,
+                nombreApellido:apellido,
+                nombreMusica:musica,
+                nombreEquipoFutbol:equipoFutbol,
+                nombrePais:pais
+                
+            })
+            
+        } catch (error) {
+            console.log(error)
+        }
+        setModoEdicion(false)
+    	setNombre('')
+    	setApellido('')
+    	setMusica('')
+    	setEquipoFutbol('')
+    	setPais('')
+    	setError(null)
+    }
