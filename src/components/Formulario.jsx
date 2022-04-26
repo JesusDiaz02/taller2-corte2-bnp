@@ -147,3 +147,12 @@ const guardarDatos = async (e)=>{
     	setPais('')
     	setError(null)
     }
+    const cancelar=()=>{
+        setModoEdicion(false)
+    	setNombre('')
+    	setApellido('')
+    	setMusica('')
+    	setEquipoFutbol('')
+    	setPais('')
+    	setError(null)
+   }
