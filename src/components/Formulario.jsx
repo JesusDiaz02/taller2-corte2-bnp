@@ -12,3 +12,19 @@ const Formulario =()=>{
     const[modoEdicion, setModoEdicion]=React.useState(false)
     const[id, setId]=React.useState('')
     const[error, setError]=React.useState(null)
+
+    React.useEffect(()=>{
+     const obtenerDatos = async()=>{
+        try {
+            const db = firebase.firestore()
+            const data = await db.collection('persona').get()
+            const array = data.docs.map(item=>(
+                {
+                    id:item.id, ...item.data()
+                }
+            ))
+            setLista(array)
+        } catch (error) {
+            console.log(error)
+        }
+    }
