@@ -156,3 +156,88 @@ const guardarDatos = async (e)=>{
     	setPais('')
     	setError(null)
    }
+   return(
+    <div className="container mt-5">
+        <h1 className="text-center">HONORIFICO</h1>
+        <hr/>
+        <div className="row">
+            <div className="col-8">
+                <h4 className="text-center">Listado Personas</h4>
+                <ul className="list-group">
+                {   
+                        lista.map((item)=>(
+                            <li className="list-group-item" key={item.id}>
+                            <span className="lead">{item.nombreNombre}-{item.nombreApellido}-{item.nombreMusica}-{item.nombreEquipoFutbol}-
+                            {item.nombrePais}</span>
+                            <button className="btn btn-danger btn-sm float-end mx-2"onClick={()=>eliminar(item.id)}>Eliminar</button>
+                                <button className="btn btn-warning btn-sm float-end"onClick={()=>auxEditar(item)}>Editar</button>
+                            </li>
+                        ))
+
+                }                  
+                </ul>
+            </div>
+            <div className="col-4">
+                <h4 className="text-center">
+                    {
+                        modoEdicion ? 'Editar pokemon':'Agregar persona'
+                    }</h4>
+                    <form onSubmit={modoEdicion ? editar : guardarDatos}>
+                        {
+                            error ?<span className="text-danger">{error}</span>:null
+                        }
+                        <input
+                        className="form-control mb-2"
+                        type="text"
+                        placeholder="Ingrese Persona
+                        onChange={(e)=>setNombre(e.target.value)}
+                        value={nombre}
+                        />
+                        <input
+                        className="form-control mb-2"
+                        type="text"
+                        placeholder="Ingrese Apellido"
+                        onChange={(e)=>setApellido(e.target.value)}
+                        value={apellido}
+                        />
+                        <input
+                        className="form-control mb-2"
+                        type="text"
+                        placeholder="Ingrese musica"
+                        onChange={(e)=>setMusica(e.target.value)}
+                        value={musica}
+                        />
+                        <input
+                        className="form-control mb-2"
+                        type="text"
+                        placeholder="Ingrese equipo futbol"
+                        onChange={(e)=>setEquipoFutbol(e.target.value)}
+                        value={equipoFutbol}
+                        />
+                        <input
+                        className="form-control mb-2"
+                        type="text"
+                        placeholder="Ingrese pais"
+                        onChange={(e)=>setPais(e.target.value)}
+                        value={pais}
+                        />
+                        
+                        {
+                            !modoEdicion?(
+                                <button className="btn btn-primary btn-block" type="submit">Agregar</button>
+                            )
+                            :
+                            (<>
+
+                            <button className="btn btn-warning btn-block" type="submit">Editar</button>
+                            <button className="btn btn-dark btn-block mx-2" onClick={()=>cancelar}>Cancelar</button>
+                            </>
+                            )
+                        }
+                    </form>
+                </div>
+            </div>
+        </div>
+    )
+}
+export default Formulario
