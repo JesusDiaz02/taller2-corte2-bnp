@@ -73,7 +73,7 @@ const guardarDatos = async (e)=>{
             nombreApellido:apellido,
             nombreMusica:musica,
             nombreEquipoFutbol:equipofutbol,
-            nombrePais:pais
+            nombrePais:pais,
             nombreFoto:foto
             
         }
@@ -201,7 +201,7 @@ const guardarDatos = async (e)=>{
                         <input
                         className="form-control mb-2"
                         type="text"
-                        placeholder="Ingrese Persona
+                        placeholder="Ingrese Persona"
                         onChange={(e)=>setNombre(e.target.value)}
                         value={nombre}
                         />
